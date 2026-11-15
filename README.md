@@ -119,6 +119,9 @@ FDM Thread: add a thread to a shaft or a hole
 
   4. Click Run.
 
+      Video of it in use!
+     https://youtu.be/-wGlxhiePYg
+
 Things to know:
   - The plugin resizes the shaft or hole to the exact size the thread
     needs, the way Fusion 360 does. For example, a 20 mm shaft with
