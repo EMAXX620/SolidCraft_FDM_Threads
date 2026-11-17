@@ -1,16 +1,5 @@
-# SolidCraft_FDM_Threads
-Generate 3D-printable threads within SolidCraft.
-
-This is loosely based off of the wonderful plugin for Fusion360 found here:
-https://github.com/dans98/Fusion-360-FDM-threads
-I've used this plugin for years and it's been great!
-
-This plugin was 100% done in Claude, I have tested it as I use it in Fusion360, however I am one person so there may be some issues or bugs.
-I tested this on SolidCraft v0.42.0 as it was the current version when making this plugin.
-
-______________
 FDM 90° THREADS PLUGIN FOR SOLIDCRAFT
-Version 1.3.2
+Version 1.6.0
 ======================================================================
 
 
@@ -34,7 +23,7 @@ tight. These threads fix both problems:
 The sizes and measurements come from a popular Fusion 360 thread file
 ("FDM90 Metric Trapezoidal Threads"). If you've used those threads in
 Fusion 360, these are the same, and bolts and nuts from either program
-*should* fit each other.
+fit each other.
 
 
 WHAT YOU NEED
@@ -65,24 +54,35 @@ They're also in the Plugins menu, as "Thread a face" and "Threaded rod".
 Both buttons have the same plug icon, because SolidCraft doesn't let
 plugins choose their own icons yet.
 
-To update to a newer version: in Preferences > Plugins, click "Show plugins folder", delete the "fdm90-threads" folder then install the new zip. Threads you made with the
+To update to a newer version: in Preferences > Plugins, click Remove on
+"FDM 90° Threads", then install the new zip. Threads you made with the
 old version stay as they were; to change them, delete them and make them
 again.
 
 
 HOW TO USE IT
 -------------
-Location of the buttons are on the Model Tab, at the end in Plugins
-
-<img width="1201" height="130" alt="image" src="https://github.com/user-attachments/assets/f7224cc3-4d67-4d19-b69a-ba92dd147a52" />
-
 
 FDM Thread: add a thread to a shaft or a hole
 
   1. Draw your part as usual, with a plain round shaft (for a bolt) or a
      plain round hole (for a nut).
-  2. Click the round side of the shaft or hole to select it.
+  2. Click the curved side of the shaft or hole to select it.
   3. Click FDM Thread. A window opens with these settings:
+
+     Remember Settings/Use Last Settings
+                  Tick this to reuse the settings from the last time
+                  you ran it in this design. The plugin then ignores
+                  the other settings in the window (but still uses the
+                  face you selected). The first time, nothing is saved
+                  yet, so it uses the settings in the window and saves
+                  those. Every run saves its settings in the design
+                  file, so they're still there after you save, close
+                  and reopen it. To change them, untick the box and run
+                  with the new settings.
+                  The window itself always opens with the standard
+                  settings showing; SolidCraft doesn't let plugins
+                  change that.
 
      Thread type  "external" for a shaft or bolt,
                   "internal" for a hole or nut.
@@ -101,7 +101,7 @@ FDM Thread: add a thread to a shaft or a hole
      Clearance    The extra gap that lets printed parts screw together,
                   from 0.000 to 0.500 mm. 0.100 to 0.200 is a good place
                   to start. Use the same clearance on the bolt and the
-                  nut that go together!
+                  nut that go together.
 
      Thread ends  "both": the thread runs all the way to both ends.
                   "picked": it runs to the end nearest where you clicked
@@ -109,6 +109,19 @@ FDM Thread: add a thread to a shaft or a hole
                   "none": it stops half a thread short of both ends.
 
      Hand         "right" (normal: tighten clockwise) or "left".
+
+     Chamfer      A 45° bevel at the open ends of the thread. It makes
+                  the bolt and nut easier to start screwing together,
+                  and removes the thin, weak half-thread at the start.
+                    "auto"   - as deep as the thread itself (on a hole
+                               this makes a countersink)
+                    "custom" - the size you type in Chamfer size
+                    "none"   - no chamfer
+                  Ends that meet a base, a shoulder or the bottom of a
+                  blind hole are never chamfered.
+
+     Chamfer size Only used when Chamfer is "custom": how far the bevel
+                  reaches, in mm.
 
      Length       Leave empty to thread the whole shaft or hole.
 
@@ -119,18 +132,19 @@ FDM Thread: add a thread to a shaft or a hole
 
   4. Click Run.
 
-      Video of it in use!
-     https://youtu.be/-wGlxhiePYg
-
 Things to know:
   - The plugin resizes the shaft or hole to the exact size the thread
     needs, the way Fusion 360 does. For example, a 20 mm shaft with
     0.100 clearance is trimmed to 19.8 mm.
   - The thread never cuts into anything past the ends of the shaft or
     hole, such as a base, a shoulder or a bolt head.
-  - The thread is made from ordinary SolidCraft steps (a sketch, a
-    revolve, a coil, a cylinder and a combine), which you can see in the
-    timeline. Undo removes all of it in one go.
+  - The thread is made from ordinary SolidCraft steps (sketches,
+    revolves, a coil, a cylinder and a combine). They're all put into
+    one folder on the timeline, named after the thread, for example
+    "FDM90-20x4 0.100e thread", so the timeline stays tidy. Click the
+    folder to open it and see the steps inside. Suppressing or deleting
+    the folder does the same to the whole thread. Undo removes all of
+    it in one go.
   - The thread doesn't update itself. If you later change the size of
     the shaft or hole, delete the thread's steps from the timeline and
     run FDM Thread again.
@@ -140,7 +154,9 @@ FDM Rod: make a threaded rod
 
   Makes a new, separate part: a rod threaded along its whole length. You
   choose the diameter, pitch, clearance, length, which way it points
-  (X, Y or Z) and where it starts.
+  (X, Y or Z), where it starts, and a chamfer for both ends (the same
+  choices as on FDM Thread). "Remember Settings/Use Last Settings"
+  works here too.
 
   It's useful for:
   - Test prints. Print a short rod and a block with a hole threaded at
@@ -185,6 +201,11 @@ IF SOMETHING GOES WRONG
       That pitch doesn't exist for that diameter. Pick one of the
       pitches the message lists, or "auto".
 
+  "a N mm chamfer is more than the ... shaft can take"
+  "the chamfers at the two ends would meet"
+      The custom chamfer is too big for the shaft or rod. Make it
+      smaller, or use "auto".
+
   "... goes up to a N mm clearance"
       That size's pitch is too fine for the clearance you chose. Pick a
       smaller clearance.
@@ -221,6 +242,11 @@ Files:
           at the right depth
         - sweeps that shape along a spiral, trims it to the ends, and
           cuts it from the part
+        - cuts a 45° chamfer at the open ends, if one was chosen
+        - puts everything it made into one timeline folder
+        - saves the settings it used in the design, for "Remember
+          Settings/Use Last Settings", and reads them back when that
+          box is ticked
         - or, for FDM Rod, makes the rod first and then does the same
 
   src/json.c, src/json.h
@@ -276,10 +302,3 @@ To rebuild after a change:
   3. Put plugin.json, README.md and build/fdm90-threads.wasm in a folder
      called fdm90-threads, and zip that folder. That zip is what you
      install in SolidCraft.
-
-______________
-
-
-
-Fusion on left, SolidCraft on right
-<img width="1937" height="1049" alt="image" src="https://github.com/user-attachments/assets/ec5e6021-cc01-4ac6-815d-6ac9489b6ff0" />
