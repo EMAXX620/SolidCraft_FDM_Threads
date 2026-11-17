@@ -2,6 +2,8 @@ FDM 90° THREADS PLUGIN FOR SOLIDCRAFT
 Version 1.6.0
 ======================================================================
 
+<img width="1141" height="525" alt="image" src="https://github.com/user-attachments/assets/f0070607-03c7-4f99-b78b-7ce9988485f7" />
+
 
 WHAT IT IS
 ----------
