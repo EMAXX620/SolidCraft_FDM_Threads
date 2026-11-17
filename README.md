@@ -1,9 +1,8 @@
 FDM 90° THREADS PLUGIN FOR SOLIDCRAFT
-Version 1.6.0
+Version 1.8.0
 ======================================================================
 
 <img width="1141" height="525" alt="image" src="https://github.com/user-attachments/assets/f0070607-03c7-4f99-b78b-7ce9988485f7" />
-
 
 WHAT IT IS
 ----------
@@ -140,13 +139,17 @@ Things to know:
     0.100 clearance is trimmed to 19.8 mm.
   - The thread never cuts into anything past the ends of the shaft or
     hole, such as a base, a shoulder or a bolt head.
-  - The thread is made from ordinary SolidCraft steps (sketches,
-    revolves, a coil, a cylinder and a combine). They're all put into
+  - The thread is made from ordinary SolidCraft steps: cylinders, a
+    chamfer, one sketch (the thread's profile), a coil and a combine. They're all put into
     one folder on the timeline, named after the thread, for example
     "FDM90-20x4 0.100e thread", so the timeline stays tidy. Click the
     folder to open it and see the steps inside. Suppressing or deleting
     the folder does the same to the whole thread. Undo removes all of
     it in one go.
+  - The thread's sketches are put into one group of the same name in
+    the browser's Sketches folder, and hidden once the thread is made,
+    so the finished part shows on its own. To see them again, click
+    the eye on that group in the browser.
   - The thread doesn't update itself. If you later change the size of
     the shaft or hole, delete the thread's steps from the timeline and
     run FDM Thread again.
@@ -239,13 +242,16 @@ Files:
         - picks the thread size and the measurements for the clearance
         - checks whether each end is open or meets more of the part (a
           base or a shoulder), so it doesn't cut into what's past the end
-        - resizes the shaft or hole to the right size
+        - resizes the shaft or hole to the right size, with Cylinder
+          features (no sketches)
+        - chamfers the open ends with SolidCraft's Chamfer, if a
+          chamfer was chosen
         - draws the cross-section of the thread groove: 45° sides, flats
           at the right depth
         - sweeps that shape along a spiral, trims it to the ends, and
           cuts it from the part
-        - cuts a 45° chamfer at the open ends, if one was chosen
-        - puts everything it made into one timeline folder
+        - puts everything it made into one timeline folder, and its
+          sketches into one browser group, then hides the sketches
         - saves the settings it used in the design, for "Remember
           Settings/Use Last Settings", and reads them back when that
           box is ticked
